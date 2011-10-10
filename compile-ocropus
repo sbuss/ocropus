@@ -52,7 +52,7 @@ date;
 
 (
 cd ocrofst
-scons
+scons -j 4
 python setup.py build_ext
 sudo python setup.py install
 cd ..
