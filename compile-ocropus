@@ -83,6 +83,22 @@ cd ..
 date;
 )
 
+# optionally compile FLANN
+
+(
+rm -rf flann-1.6.11-src
+unzip DIST/flann-1.6.11-src.zip
+cd flann-1.6.11-src
+rm -rf build
+mkdir build
+cd build
+cmake ..
+make
+sudo make install
+)
+
+# last messages to the user
+
 (echo $LD_LIBRARY_PATH | grep /usr/local/lib) || {
 	echo
 	echo IMPORTANT
