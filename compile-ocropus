@@ -82,3 +82,12 @@ make
 cd ..
 date;
 )
+
+(echo $LD_LIBRARY_PATH | grep /usr/local/lib) || {
+	echo
+	echo IMPORTANT
+	echo
+	echo You must add /usr/local/lib/ to your LD_LIBRARY_PATH variable or
+	echo "things won't work."
+	echo
+}
