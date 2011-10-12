@@ -34,6 +34,7 @@ date;
 (
 cd ocrorast
 make
+python setup.py build_ext
 sudo python setup.py install
 cd ..
 date;
@@ -53,6 +54,7 @@ date;
 (
 cd ocrofst
 scons -j 4
+sudo scons install
 python setup.py build_ext
 sudo python setup.py install
 cd ..
