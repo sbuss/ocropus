@@ -92,7 +92,7 @@ cd flann-1.6.11-src
 rm -rf build
 mkdir build
 cd build
-cmake ..
+cmake .. -DBUILD_MATLAB_BINDINGS=OFF
 make
 sudo make install
 )
