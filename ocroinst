@@ -1,0 +1,248 @@
+#!/bin/bash
+
+repository=${OCROREP:-ssh://define.me/ocropus}
+dirs="iulib llpy ocrofst ocrolseg ocropy ocrorast pyopenfst"
+default_download=${OCRODOWNLOAD:-http://define.me/ocropus}
+default_cmodel=uw3unlv-240-4-60-g2.cmodel  # should be under .bz2 on the server
+
+cmd=$1
+shift
+echo === $cmd
+case "$cmd" in
+hg)
+    for dir in $dirs; do
+        echo "=== cd $dir; hg $*"
+            (cd $dir && hg "$@") ||
+                (echo $dir: error; exit 1)
+    done
+    ;;
+
+clone)
+    for dir in $dirs; do
+        echo === cloning $dir
+            hg clone $repository/$dir || 
+                (echo $dir: error cloning; exit 1)
+    done
+    ;;
+
+pull)
+    for dir in $dirs; do
+        echo === pulling $dir
+            (cd $dir && hg pull $repository/$dir && hg update) || 
+                (echo $dir: error pulling; exit 1)
+    done
+    ;;
+
+push)
+    for dir in $dirs; do
+        echo === pushing $dir
+        (cd $dir && hg push $repository/$dir) || 
+            (echo $dir: error pushing; exit 1)
+    done
+    ;;
+
+commit)
+    for dir in $dirs; do
+        echo === committing $dir
+            (cd $dir && hg commit "$@") || 
+                (echo $dir: error committing; exit 1)
+    done
+    ;;
+
+packages)
+    sudo apt-get install \
+        build-essential imagemagick scons mercurial \
+        libpng12-dev libjpeg62-dev libtiff4-dev libgif-dev \
+        libsdl-gfx1.2-dev libsdl-image1.2-dev libsdl1.2-dev \
+        libavcodec-dev libavdevice-dev libavformat-dev libavutil-dev \
+        libavfilter-dev \
+        libpng12-dev libjpeg62-dev libtiff4-dev libgif-dev \
+        libsdl-gfx1.2-dev libsdl-image1.2-dev libsdl1.2-dev \
+        libavcodec-dev libavdevice-dev libavformat-dev libavutil-dev \
+        libavfilter-dev \
+        libgsl0-dev libblas-dev \
+        libsqlite3-dev\
+        liblapack-dev libatlas-base-dev \
+        python-dev swig1.3 zlib1g-dev \
+        python-scipy python-matplotlib python-matplotlib-data \
+        python-tables \
+        ipython
+        # tesseract-ocr tesseract-ocr-dev
+        # tesseract-ocr-dev libleptonica-dev
+    ;;
+
+
+cleanup)
+    rm -rf flann*/build
+    rm -rf flann*/src/python/build
+    rm -rf iuprlab/build
+    rm -rf ocrofst/build
+    rm -rf ocrolseg/build
+    rm -rf ocropy/build
+    rm -rf ocrorast/build
+    rm -rf pyopenfst/build
+
+    for dir in $dirs; do
+        echo $dir
+        (cd $dir && python setup.py clean)
+        (cd $dir && test -f SConstruct && scons -c)
+        (cd $dir && test -f Makefile && make clean)
+    done
+    ;;
+
+install)
+    set -o errexit
+
+    echo please sudo now so that installs work
+    sudo id
+
+    # compile iulib
+
+    (
+    cd iulib
+    scons -c
+    sudo sh uninstall
+    sudo sh ubuntu-packages 
+    scons -j 4 sdl=1
+    sudo scons -j 4 sdl=1 install
+    cd pyswig
+    python setup.py build_ext
+    sudo python setup.py install
+    )
+
+    # compile ocrolseg
+
+    (
+    cd ocrolseg
+    make
+    sudo python setup.py install
+    cd ..
+    date;
+    )
+
+    # compile ocrorast
+
+    (
+    cd ocrorast
+    make
+    python setup.py build_ext
+    sudo python setup.py install
+    cd ..
+    date;
+    )
+
+    # compile ocropy
+
+    (
+    cd ocropy
+    sudo python setup.py install
+    cd ..
+    date;
+    )
+
+    # compile llpy
+
+    (
+    cd llpy
+    sudo python setup.py install
+    cd ..
+    date;
+    )
+
+    # compile ocrofst 
+
+    (
+    cd ocrofst
+    (cd ocrofstll && scons && sudo scons install)
+    python setup.py build_ext
+    sudo python setup.py install
+    cd ..
+    date;
+    )
+
+    # compile openfst 
+
+    (
+    rm -rf openfst-1.1
+    test -f DIST/openfst-1.1.tar.gz && tar -zxvf DIST/openfst-1.1.tar.gz 
+    cd openfst-1.1
+    ./configure
+    make -j 4
+    sudo make install
+    cd ..
+    date;
+    )
+
+    # compile Python bindings for openfst
+
+    (
+    cd pyopenfst
+    make
+    cd ..
+    date;
+    )
+
+    # optionally compile FLANN
+
+    (
+    sudo rm -rf flann-1.7.1-src
+    unzip DIST/flann-1.7.1-src.zip
+    cd flann-1.7.1-src
+    rm -rf build
+    mkdir build
+    cd build
+    cmake .. -DBUILD_MATLAB_BINDINGS=OFF
+    make
+    sudo make install
+    )
+
+
+    # last messages to the user
+
+    (echo $LD_LIBRARY_PATH | grep /usr/local/lib) || {
+            echo
+            echo IMPORTANT
+            echo
+            echo You must add /usr/local/lib/ to your LD_LIBRARY_PATH variable 
+            echo and add /usr/local/bin to your PATH variable.
+            echo
+    }
+
+    ;;
+
+dl)
+    (
+    if test -f ocropy/models/$default_cmodel; then
+        echo $default_cmodel already found, not downloading again
+    else
+        cd ocropy/models
+        wget -nd $default_download/$default_cmodel.bz2
+        bunzip2 -9v $default_cmodel.bz2
+        rm default.cmodel
+        ln -s $default_cmodel default.cmodel || true
+    fi
+    )
+    ;;
+
+uninstall)
+    prefix=/usr/local
+    rm -rfv ${prefix}/include/colib
+    rm -rfv ${prefix}/include/iulib
+    rm -rfv ${prefix}/include/ocropus
+    rm -rfv ${prefix}/include/ocrorast
+    rm -rfv ${prefix}/include/ocrolseg
+    rm -rfv ${prefix}/include/ocrofst
+    rm -rfv ${prefix}/lib/libiulib*
+    rm -rfv ${prefix}/lib/libocropus*
+    rm -rfv ${prefix}/lib/libocrorast*
+    rm -rfv ${prefix}/lib/libocrofst*
+    rm -rfv ${prefix}/lib/python*/dist-packages/_ocro*.so
+    rm -rfv ${prefix}/lib/python*/dist-packages/ocro*
+    ;;
+
+*)
+    echo "unknown command:" $1
+    exit 1
+    ;;
+esac
+
