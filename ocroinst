@@ -2,7 +2,7 @@
 
 repository=${OCROREP:-ssh://define.me/ocropus}
 dirs="iulib llpy ocrofst ocrolseg ocropy ocrorast pyopenfst"
-default_download=${OCRODOWNLOAD:-http://define.me/ocropus}
+default_download=${OCRODOWNLOAD:-http://www-user.rhrk.uni-kl.de/~tmb}
 default_cmodel=uw3unlv-240-4-60-g2.cmodel  # should be under .bz2 on the server
 
 cmd=$1
