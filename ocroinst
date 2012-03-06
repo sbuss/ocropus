@@ -3,7 +3,7 @@
 repository=${OCROREP:-ssh://define.me/ocropus}
 dirs="iulib llpy ocrofst ocrolseg ocropy ocrorast pyopenfst"
 default_download=${OCRODOWNLOAD:-http://www-user.rhrk.uni-kl.de/~tmb}
-default_cmodel=uw3unlv-240-4-60-g2.cmodel  # should be under .bz2 on the server
+default_cmodels="uw3unlv-240-4-60-g2.cmodel uw3unlv-240-8-40-nogeo.cmodel" 
 
 cmd=$1
 shift
@@ -216,10 +216,12 @@ dl)
         echo $default_cmodel already found, not downloading again
     else
         cd ocropy/models
-        wget -nd $default_download/$default_cmodel.bz2
-        bunzip2 -9v $default_cmodel.bz2
         rm default.cmodel
-        ln -s $default_cmodel default.cmodel || true
+        for m in $default_cmodels; do
+            wget -nd $default_download/$m.bz2
+            bunzip2 -9v $m.bz2
+            test -e default.cmodel || ln -s $m default.cmodel || true
+        done
     fi
     )
     ;;
