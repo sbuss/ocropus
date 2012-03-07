@@ -214,11 +214,10 @@ install)
 dl)
     (
     cd $datadir || die "can't cd to $datadir"
-    rm default.cmodel
+    rm -f default.cmodel
     for m in $default_cmodels; do
         if test -f $m; then continue; fi
-        wget -nd $default_download/$m.bz2
-        bunzip2 -9v $m.bz2
+        curl $default_download/$m.bz2 | bunzip2 > $m
         test -e default.cmodel || ln -s $m default.cmodel || true
     done
     )
