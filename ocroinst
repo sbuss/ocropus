@@ -217,7 +217,7 @@ dl)
     rm -f default.cmodel
     for m in $default_cmodels; do
         if test -f $m; then continue; fi
-        curl $default_download/$m.bz2 | bunzip2 > $m
+        curl $default_download/$m.bz2 | bunzip2 > $m || rm -f $m
         test -e default.cmodel || ln -s $m default.cmodel || true
     done
     )
