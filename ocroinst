@@ -4,6 +4,7 @@ repository=${OCROREP:-ssh://define.me/ocropus}
 dirs="iulib llpy ocrofst ocrolseg ocropy ocrorast pyopenfst"
 default_download=${OCRODOWNLOAD:-http://www-user.rhrk.uni-kl.de/~tmb}
 default_cmodels="uw3unlv-240-4-60-g2.cmodel uw3unlv-240-8-40-nogeo.cmodel" 
+datadir=/usr/local/share/ocropus
 
 cmd=$1
 shift
@@ -212,17 +213,14 @@ install)
 
 dl)
     (
-    if test -f ocropy/models/$default_cmodel; then
-        echo $default_cmodel already found, not downloading again
-    else
-        cd ocropy/models
-        rm default.cmodel
-        for m in $default_cmodels; do
-            wget -nd $default_download/$m.bz2
-            bunzip2 -9v $m.bz2
-            test -e default.cmodel || ln -s $m default.cmodel || true
-        done
-    fi
+    cd $datadir || die "can't cd to $datadir"
+    rm default.cmodel
+    for m in $default_cmodels; do
+        if test -f $m; then continue; fi
+        wget -nd $default_download/$m.bz2
+        bunzip2 -9v $m.bz2
+        test -e default.cmodel || ln -s $m default.cmodel || true
+    done
     )
     ;;
 
