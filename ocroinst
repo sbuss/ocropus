@@ -67,7 +67,7 @@ packages)
         python-dev swig1.3 zlib1g-dev \
         python-scipy python-matplotlib python-matplotlib-data \
         python-tables \
-        ipython
+        ipython curl
         # tesseract-ocr tesseract-ocr-dev
         # tesseract-ocr-dev libleptonica-dev
     ;;
