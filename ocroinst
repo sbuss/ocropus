@@ -3,7 +3,7 @@
 repository=${OCROREP:-ssh://define.me/ocropus}
 dirs="iulib llpy ocrofst ocrolseg ocropy ocrorast pyopenfst"
 default_download=${OCRODOWNLOAD:-http://www-user.rhrk.uni-kl.de/~tmb}
-default_cmodels="uw3unlv-240-4-60-g2.cmodel uw3unlv-240-8-40-nogeo.cmodel" 
+default_cmodels="uw3unlv-240-4-60-g2.cmodel uw3unlv-240-8-40-nogeo.cmodel space.model space2.model default.fst none.fst case.fst" 
 datadir=/usr/local/share/ocropus
 
 cmd=$1
