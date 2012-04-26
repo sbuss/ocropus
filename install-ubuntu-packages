@@ -15,4 +15,5 @@ apt-get install \
     libsqlite3-dev\
     liblapack-dev libatlas-base-dev \
     python-dev swig1.3 zlib1g-dev \
-    python-scipy python-matplotlib python-matplotlib-data
+    python-scipy python-matplotlib python-matplotlib-data \
+    python-sklearn

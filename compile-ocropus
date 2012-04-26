@@ -49,6 +49,14 @@ cd ..
 date;
 )
 
+# compile llpy
+
+(
+cd llpy
+sudo python setup.py install
+cd ..
+date;
+)
 # compile ocrofst 
 
 (
@@ -86,13 +94,13 @@ date;
 # optionally compile FLANN
 
 (
-rm -rf flann-1.6.11-src
-unzip DIST/flann-1.6.11-src.zip
-cd flann-1.6.11-src
+rm -rf flann-1.7.1-src
+unzip DIST/flann-1.7.1-src.zip
+cd flann-1.7.1-src
 rm -rf build
 mkdir build
 cd build
-cmake ..
+cmake .. -DBUILD_MATLAB_BINDINGS=OFF
 make
 sudo make install
 )
