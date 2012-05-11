@@ -218,6 +218,7 @@ install)
 
 dl)
     (
+    mkdir -p $datadir
     cd $datadir || die "can't cd to $datadir"
     rm -f default.cmodel
     for m in $default_cmodels; do
