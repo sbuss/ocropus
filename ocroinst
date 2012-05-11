@@ -4,13 +4,7 @@ repository=${OCROREP:-ssh://define.me/ocropus}
 dirs="iulib llpy ocrofst ocrolseg ocropy ocrorast pyopenfst"
 default_download=${OCRODOWNLOAD:-http://www-user.rhrk.uni-kl.de/~tmb}
 default_cmodels="uw3unlv-240-4-60-g2.cmodel uw3unlv-240-8-40-nogeo.cmodel space.model space2.model default.fst none.fst case.fst" 
-default_cmodel=uw3unlv-240-8-40-nogeo.cmodel
 datadir=/usr/local/share/ocropus
-
-die() {
-    echo ERROR: "$*"
-    exit 1
-}
 
 cmd=$1
 shift
@@ -59,21 +53,21 @@ commit)
 packages)
     sudo apt-get install \
         build-essential imagemagick scons mercurial \
-        libpng12-dev libjpeg62-dev libtiff4-dev libgif-dev \
+        libpng12-dev libjpeg8-dev libtiff4-dev libgif-dev \
         libsdl-gfx1.2-dev libsdl-image1.2-dev libsdl1.2-dev \
         libavcodec-dev libavdevice-dev libavformat-dev libavutil-dev \
         libavfilter-dev \
-        libpng12-dev libjpeg62-dev libtiff4-dev libgif-dev \
+        libpng12-dev libjpeg8-dev libtiff4-dev libgif-dev \
         libsdl-gfx1.2-dev libsdl-image1.2-dev libsdl1.2-dev \
         libavcodec-dev libavdevice-dev libavformat-dev libavutil-dev \
         libavfilter-dev \
         libgsl0-dev libblas-dev \
         libsqlite3-dev\
         liblapack-dev libatlas-base-dev \
-        python-dev swig1.3 zlib1g-dev \
+        python-dev swig2.0 swig zlib1g-dev \
         python-scipy python-matplotlib python-matplotlib-data \
-        python-tables python-scikits-learn \
-        ipython curl
+        python-tables \
+        ipython curl cmake
         # tesseract-ocr tesseract-ocr-dev
         # tesseract-ocr-dev libleptonica-dev
     ;;
@@ -218,18 +212,14 @@ install)
     ;;
 
 dl)
-    echo downloading...
     (
-    mkdir -p $datadir
     cd $datadir || die "can't cd to $datadir"
     rm -f default.cmodel
     for m in $default_cmodels; do
-        echo $m
-        if test -f $m; then echo ... exists; continue; fi
+        if test -f $m; then continue; fi
         curl $default_download/$m.bz2 | bunzip2 > $m || rm -f $m
+        test -e default.cmodel || ln -s $m default.cmodel || true
     done
-    echo linking $default_cmodel to default.cmodel
-    test -e default.cmodel || ln -s $default_cmodel default.cmodel
     )
     ;;
 
