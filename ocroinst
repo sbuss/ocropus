@@ -66,7 +66,7 @@ packages)
         liblapack-dev libatlas-base-dev \
         python-dev swig1.3 zlib1g-dev \
         python-scipy python-matplotlib python-matplotlib-data \
-        python-tables \
+        python-tables python-scikits-learn \
         ipython curl
         # tesseract-ocr tesseract-ocr-dev
         # tesseract-ocr-dev libleptonica-dev
