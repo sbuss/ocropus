@@ -72,6 +72,7 @@ packages)
         liblapack-dev libatlas-base-dev \
         python-dev swig2.0 swig zlib1g-dev \
         python-scipy python-matplotlib python-matplotlib-data \
+        python-sklearn \
         python-tables \
         ipython curl cmake
         # tesseract-ocr tesseract-ocr-dev
