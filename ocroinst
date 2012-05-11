@@ -4,6 +4,7 @@ repository=${OCROREP:-ssh://define.me/ocropus}
 dirs="iulib llpy ocrofst ocrolseg ocropy ocrorast pyopenfst"
 default_download=${OCRODOWNLOAD:-http://www-user.rhrk.uni-kl.de/~tmb}
 default_cmodels="uw3unlv-240-4-60-g2.cmodel uw3unlv-240-8-40-nogeo.cmodel space.model space2.model default.fst none.fst case.fst" 
+default_cmodel=uw3unlv-240-8-40-nogeo.cmodel
 datadir=/usr/local/share/ocropus
 
 die() {
@@ -222,10 +223,12 @@ dl)
     cd $datadir || die "can't cd to $datadir"
     rm -f default.cmodel
     for m in $default_cmodels; do
-        if test -f $m; then continue; fi
+        echo $m
+        if test -f $m; then echo ... exists; continue; fi
         curl $default_download/$m.bz2 | bunzip2 > $m || rm -f $m
-        test -e default.cmodel || ln -s $m default.cmodel || true
     done
+    echo linking default.cmodel
+    test -e default.cmodel || ln -s $default_cmodel default.cmodel || die "no default model"
     )
     ;;
 
