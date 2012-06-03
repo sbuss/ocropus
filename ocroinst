@@ -12,6 +12,26 @@ die() {
     exit 1
 }
 
+if test "$1" = ""; then
+
+cat <<EOF
+
+Run the following in sequence in order to install OCRopus:
+
+	sudo $0 packages    -- install required packages
+	$0 install          -- compile and install everything
+	sudo $0 dl          -- download models
+
+Other commands:
+
+	sudo $0 cleanup     -- removes most of the build directories/files
+	sudo $0 uninstall   -- removes most of the installed files from /usr/local
+
+EOF
+exit 0
+
+fi
+
 cmd=$1
 shift
 echo === $cmd
