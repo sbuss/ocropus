@@ -1,2 +1,7 @@
 syntax: glob
-openfst-1.1
+openfst-*
+flann-*
+*.swp
+*~
+*.so
+.pynative
