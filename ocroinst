@@ -1,7 +1,7 @@
 #!/bin/bash
 
 repository=${OCROREP:-ssh://define.me/ocropus}
-dirs="iulib llpy ocrofst ocrolseg ocropy ocrorast pyopenfst"
+dirs="iulib ocropy llpy ocrofst pyopenfst"
 default_download=${OCRODOWNLOAD:-http://www-user.rhrk.uni-kl.de/~tmb}
 default_cmodels="uw3unlv-240-4-60-g2.cmodel uw3unlv-240-8-40-nogeo.cmodel space.model space2.model default.fst none.fst case.fst" 
 default_cmodel=uw3unlv-240-8-40-nogeo.cmodel
@@ -138,27 +138,6 @@ install)
     sudo python setup.py install
     )
 
-    # compile ocrolseg
-
-    (
-    cd ocrolseg
-    make
-    sudo python setup.py install
-    cd ..
-    date;
-    )
-
-    # compile ocrorast
-
-    (
-    cd ocrorast
-    make
-    python setup.py build_ext
-    sudo python setup.py install
-    cd ..
-    date;
-    )
-
     # compile ocropy
 
     (
@@ -223,7 +202,6 @@ install)
     make
     sudo make install
     )
-
 
     # last messages to the user
 
