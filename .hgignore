@@ -5,3 +5,6 @@ flann-*
 *~
 *.so
 .pynative
+flowrec
+clustrec
+models
