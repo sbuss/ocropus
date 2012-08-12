@@ -9,4 +9,11 @@ Install them with:
     sudo python setup.py install
     ./run-test
 
-Other subdirectories contain examples for training etc.
+Other subdirectories contain examples for training etc.:
+
+  - fraktur-boxes: An example of training OCRopus models on the same box
+    files that are used for Tesseract training.  This is a good way of
+    getting OCRopus training started.
+
+  - uw3-500: An example of running the recognizer on text lines and
+    training OCRopus models with unaligned data.

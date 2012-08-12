@@ -10,16 +10,33 @@ fi
 
 tar -zxvf $boxtar
 
+# Start by extracting character data from the tif images.
+# For each input file, tess2h5 will look for a corresponding
+# .box files.  You can examine the resulting character database
+# with "ocropus-cedit boxdata.h5"
+
 ocropus-db tess2h5 deu-f/*.tif -o boxdata.h5 
 
-ocropus-tsplit --maxdepth 0 --pca 100 --targetsize 5 --maxsplit 80 -d boxdata.h5 -o boxdata.split 
+# Compute a vector quantizer for the box data.  We just
+# use a single level here (no tree) because the data set is
+# so small.  
+
+ocropus-tsplit --pca 0.95 --vq 80 -d boxdata.h5 -o boxdata.split 
+
+# Compute terminal classifiers for the boxdata.
 
 ocropus-tleaves -Q 4 -s boxdata.split -d boxdata.h5 -o boxdata.cmodel
 
+# Predict using this data.  Normally, we'd want to use cross-validation
+# (-t ...) here and during training, but let's not bother.
+
 ocropus-db predict -m boxdata.cmodel boxdata.h5
 
-convert deu-f/fontfile_2.tif  page.png
+# Now let's segment one of the pages...
 
+convert deu-f/fontfile_2.tif page.png
 ocropus-gpageseg page.png
+
+# and apply the new recognizer.
 
 ocropus-lattices -m boxdata.cmodel page/??????.png
