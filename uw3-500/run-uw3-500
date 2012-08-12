@@ -1,0 +1,69 @@
+#!/bin/bash -ex
+
+################################################################
+# make sure everything is downloaded and has been cleaned up 
+################################################################
+
+if test -d book; then
+    echo "data already downloaded"
+else
+    wget http://iupr1.cs.uni-kl.de/~tmb/ocropus-data/uw3-500.tgz
+    tar -zxvf uw3-500.tgz
+fi
+
+set +x
+rm -f book/????/??????.aligned.txt
+rm -f book/????/??????.rseg.png
+rm -f book/????/??????.cseg.png
+rm -f book/????/??????.lattice
+rm -f book/????/??????.txt
+set -x
+
+################################################################
+# start off with recognition
+################################################################
+
+# compute raw recognition results, in parallel
+ocropus-lattices --parallel 2 'book/????/??????.png'
+
+# integrate recognition results with a language model
+ocropus-ngraphs 'book/????/??????.lattice'
+
+# compute the error rate relative to the ground truth data
+ocropus-errs 'book/000?/??????.gt.txt'
+
+# generate text output
+set +x
+for file in book/????/??????.txt; do
+    echo "$file	`cat $file`"
+done > book.txt
+set -x
+
+################################################################
+# now let's go through the training steps
+################################################################
+
+# align recognition results with ground truth
+ocropus-align 'book/????/??????.lattice'
+
+# extract character shapes into the HDF5 book.h5 database
+# you can look at this database with ocropus-cedit book.h5
+ocropus-lattices --extract book.h5 'book/????/??????.png'
+
+# compute a tree vector quantizer for the characters
+# in book.h5
+ocropus-tsplit -d book.h5 -o book.tsplit --maxsplit 50 
+
+# compute terminal classifiers for each VQ bucket;
+# this results in a character model that can then be used for recognition
+ocropus-tleaves -d book.h5 -s book.tsplit -o book.cmodel
+
+# compute the per-character error rate from the classifier
+# (note that you should really do this with separate training/test
+# sets; the -t option is convenient for that)
+ocropus-db predict -m book.cmodel book.h5
+
+# use the new character model for recognition (of course, this
+# will be worse than the original model, since we didn't use
+# a lot of characters for training)
+ocropus-lattices 'book/00??/??????.png' -m book.cmodel

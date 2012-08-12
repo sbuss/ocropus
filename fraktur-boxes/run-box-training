@@ -1,0 +1,25 @@
+#!/bin/bash -ex
+
+boxtar=boxtiff-2.01.deu-f.tar.gz
+
+if test -f $boxtar; then
+    echo $boxtar already downloaded
+else
+    wget -nd http://iupr1.cs.uni-kl.de/~tmb/ocropus-data/$boxtar
+fi
+
+tar -zxvf $boxtar
+
+ocropus-db tess2h5 deu-f/*.tif -o boxdata.h5 
+
+ocropus-tsplit --maxdepth 0 --pca 100 --targetsize 5 --maxsplit 80 -d boxdata.h5 -o boxdata.split 
+
+ocropus-tleaves -Q 4 -s boxdata.split -d boxdata.h5 -o boxdata.cmodel
+
+ocropus-db predict -m boxdata.cmodel boxdata.h5
+
+convert deu-f/fontfile_2.tif  page.png
+
+ocropus-gpageseg page.png
+
+ocropus-lattices -m tess.cmodel page/??????.png
