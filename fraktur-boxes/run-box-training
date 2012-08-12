@@ -22,4 +22,4 @@ convert deu-f/fontfile_2.tif  page.png
 
 ocropus-gpageseg page.png
 
-ocropus-lattices -m tess.cmodel page/??????.png
+ocropus-lattices -m boxdata.cmodel page/??????.png
