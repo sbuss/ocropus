@@ -52,7 +52,7 @@ ocropus-lattices --extract book.h5 'book/????/??????.png'
 
 # compute a tree vector quantizer for the characters
 # in book.h5
-ocropus-tsplit -d book.h5 -o book.tsplit --maxsplit 50 
+ocropus-tsplit -d book.h5 -o book.tsplit --maxsplit 100
 
 # compute terminal classifiers for each VQ bucket;
 # this results in a character model that can then be used for recognition
