@@ -1,13 +1,11 @@
 All the current OCRopus sources can be found in the ./ocropy subdirectory.
 Install them with:
 
-    cd ocropy
-    sudo ./ocropus-install-packages
-    cd models
-    ./ocropus-download-models
-    cd ..
-    sudo python setup.py install
-    ./run-test
+    $ sudo apt-get install curl python-scipy python-matplotlib python-tables
+    $ cd ocropy
+    $ python setup.py download_models
+    $ sudo python setup.py install
+    $ ./run-test
 
 Other subdirectories contain examples for training etc.:
 
