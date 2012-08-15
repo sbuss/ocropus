@@ -48,6 +48,7 @@ ocropus-align 'book/????/??????.lattice'
 
 # extract character shapes into the HDF5 book.h5 database
 # you can look at this database with ocropus-cedit book.h5
+rm -rf book.h5
 ocropus-lattices --extract book.h5 'book/????/??????.png'
 
 # compute a tree vector quantizer for the characters
