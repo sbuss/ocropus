@@ -1,4 +1,13 @@
-#!/bin/bash -ex
+#!/bin/bash -e
+
+echo "================================================================"
+echo "=== This script illustrates training of a simple, initial"
+echo "=== character recognizer from the kind of boxdata training"
+echo "=== files used with Tesseract."
+echo "================================================================"
+echo
+sleep 1
+set -x
 
 boxtar=boxtiff-2.01.deu-f.tar.gz
 
@@ -40,3 +49,17 @@ ocropus-gpageseg page.png
 # and apply the new recognizer.
 
 ocropus-lattices -m boxdata.cmodel page/??????.png
+
+set +x
+echo
+echo "================================================================"
+echo "=== You now have a simple Fraktur model, boxdata.cmodel."
+echo "=== "
+echo "=== This is only an initial model.  It isn't using any baseline"
+echo "=== information.  The next training step consists of retraining"
+echo "=== the model by aligning text lines with ground truth (see the"
+echo "=== example in uw3-500)."
+echo "=== "
+echo "=== In addition, you probably should construct a language model."
+echo "=== You can do that with ocropus-ngraphs."
+echo "================================================================"
