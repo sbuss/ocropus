@@ -52,7 +52,7 @@ ocropus-gpageseg page.bin.png
 
 # and apply the new recognizer.
 
-ocropus-lattices -m boxdata.cmodel page/??????.png
+ocropus-lattices -m boxdata.cmodel page/??????.bin.png
 
 set +x
 echo
