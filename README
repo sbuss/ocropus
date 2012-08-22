@@ -1,8 +1,8 @@
 All the current OCRopus sources can be found in the ./ocropy subdirectory.
 Install them with:
 
-    $ sudo apt-get install curl python-scipy python-matplotlib python-tables firefox imagemagick
     $ cd ocropy
+    $ sudo apt-get install $(cat PACKAGES)
     $ python setup.py download_models
     $ sudo python setup.py install
     $ ./run-test
