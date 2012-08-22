@@ -1,0 +1,8 @@
+This example illustrates applying OCRopus to a small-print historical
+newspaper, as well as adjusting the layout analysis parameters for
+ocropus-gpageseg.
+
+In general, for these kinds of inputs, you probably need to adjust parameters.
+To obtain higher recognition rates, if you have a significant number of these
+documents, it also makes sense to train a specific model (this sample run
+just uses the generic model).
