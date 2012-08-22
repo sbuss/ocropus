@@ -1,0 +1,10 @@
+#!/bin/bash -ex
+
+par=4
+rm -rf book
+ocropus-nlbin newspaper-page.jpg -o book
+ocropus-gpageseg book/????.bin.png --maxlines 800 --maxseps 10
+find book -name '*.bin.png' | xargs -P $par -n 100 ocropus-lattices 
+find book -name '*.lattice' | xargs -P $par -n 100 ocropus-ngraphs
+ocropus-hocr book -o book.html
+ocropus-visualize-results book
