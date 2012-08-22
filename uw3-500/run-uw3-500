@@ -25,7 +25,7 @@ true
 true compute raw recognition results
 true
 
-ocropus-lattices 'book/????/??????.png'
+ocropus-lattices 'book/????/??????.bin.png'
 
 true
 true integrate recognition results with a language model
