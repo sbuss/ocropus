@@ -65,7 +65,7 @@ true you can look at this database with ocropus-cedit book.h5
 true
 
 rm -rf book.h5
-ocropus-lattices --extract book.h5 'book/????/??????.png'
+ocropus-lattices --extract book.h5 'book/????/??????.bin.png'
 
 true
 true compute a tree vector quantizer for the characters
@@ -94,4 +94,4 @@ true will be worse than the original model, since we didn\'t use
 true a lot of characters for training
 true
 
-ocropus-lattices 'book/00??/??????.png' -m book.cmodel
+ocropus-lattices 'book/00??/??????.bin.png' -m book.cmodel
