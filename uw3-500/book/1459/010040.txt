@@ -1,1 +1,0 @@
-This is done by using shifting windows, as illustrated

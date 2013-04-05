@@ -1,1 +1,0 @@
-resolution of ten microseconds. The delay is calculated

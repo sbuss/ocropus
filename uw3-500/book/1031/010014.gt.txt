@@ -1,1 +1,0 @@
-vertices of the upper levels' graphs may become its children.

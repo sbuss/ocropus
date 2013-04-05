@@ -1,1 +1,0 @@
-4.2. Hough transformation using the bimodal

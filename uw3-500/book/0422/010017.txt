@@ -1,1 +1,0 @@
-h Elevation of the location (in km) above sea level (for Bahrain,

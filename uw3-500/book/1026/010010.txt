@@ -1,1 +1,0 @@
-The iregular sampling hierarchy is thus built recursively from

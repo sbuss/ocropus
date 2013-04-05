@@ -1,1 +1,0 @@
-two points must be equal''. In practice this condition is frequently not satisfied for

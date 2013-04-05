@@ -1,1 +1,0 @@
-design rarely uses minimum size transistors, but is

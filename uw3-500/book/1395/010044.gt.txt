@@ -1,1 +1,0 @@
-tracker is identical. Thus an edge tracker path history can be

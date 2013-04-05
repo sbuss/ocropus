@@ -1,1 +1,0 @@
-the adjacency list for region k. It has been con-

@@ -1,1 +1,0 @@
-The waveform of the rotor current numerically generated for a

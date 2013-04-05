@@ -1,1 +1,0 @@
-reducing actions (given the manipulator, a finite set of

@@ -1,1 +1,0 @@
-two adjacent pixels is bounded below only by the size of the

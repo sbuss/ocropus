@@ -1,1 +1,0 @@
-for the possible robot location. Since the robot is assumed to

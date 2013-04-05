@@ -1,1 +1,0 @@
-x drawn by the cell must be the local maximum among the

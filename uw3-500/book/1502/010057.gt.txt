@@ -1,1 +1,0 @@
-object will trace out a conic section, an el-
