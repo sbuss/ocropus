@@ -1,0 +1,1 @@
+A node wishing to transmit listens to the medium and

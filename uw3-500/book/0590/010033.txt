@@ -1,0 +1,1 @@
+extend the first responder signal and the search results register

@@ -1,0 +1,1 @@
+The goal in computer vision systems is to analyze data collected from the environment

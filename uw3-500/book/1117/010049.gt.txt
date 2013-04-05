@@ -1,0 +1,1 @@
+A window is open displaying the first unread message.

@@ -1,0 +1,1 @@
+technique can be used to compute qualitative properties

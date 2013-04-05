@@ -1,0 +1,1 @@
+The irregular sampling hierarchy is thus built recursively from

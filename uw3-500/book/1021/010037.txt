@@ -1,0 +1,1 @@
+endless loop because in this strategy we use only the pick

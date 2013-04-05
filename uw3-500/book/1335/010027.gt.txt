@@ -1,0 +1,1 @@
+arrays of processors (``cells''). Communication between cells

@@ -1,0 +1,1 @@
+solving the n-queens problem, Kale (1990)

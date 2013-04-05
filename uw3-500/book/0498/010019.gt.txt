@@ -1,0 +1,1 @@
+00150 REM -  . . . .LINE 2 AS DISTANCES FROM 2 TO 1,2, . . . ,N

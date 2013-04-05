@@ -1,0 +1,1 @@
+from the image at the predicted point and perfoms cross-correlation

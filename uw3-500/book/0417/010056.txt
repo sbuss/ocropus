@@ -1,0 +1,1 @@
+similar surviving neighbors. The survivors (parents) compute new

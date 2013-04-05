@@ -1,0 +1,1 @@
+accessible. Similarly, the shared memory is accessible

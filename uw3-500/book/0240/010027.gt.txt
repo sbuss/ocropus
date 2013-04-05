@@ -1,0 +1,1 @@
+where L and h are the span and width (i.e., dimension along the

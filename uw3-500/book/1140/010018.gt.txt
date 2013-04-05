@@ -1,0 +1,1 @@
+the camera undergoes pure rotation. This method does
